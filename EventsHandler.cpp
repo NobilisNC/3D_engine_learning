@@ -7,6 +7,8 @@ std::vector<MouseListener*> EventsHandler::_mouseListener = std::vector<MouseLis
 
 void EventsHandler::init() {
     _keys = new bool[1024];
+    for (size_t i = 0; i < 1024; i++)
+        _keys[i] = false;
 
 }
 
