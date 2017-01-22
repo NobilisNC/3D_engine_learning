@@ -2,6 +2,7 @@
 
 bool* EventsHandler::_keys = nullptr;
 std::vector<KeyboardListener*> EventsHandler::_keyboardListener = std::vector<KeyboardListener*> ();
+std::vector<MouseListener*> EventsHandler::_mouseListener = std::vector<MouseListener*> ();
  GLfloat EventsHandler::deltaTimeFrame = 0.0f;
 
 void EventsHandler::init() {
@@ -28,4 +29,19 @@ void EventsHandler::key_callback(GLFWwindow* window, int key, int scancode, int 
         _keys[key] = false;
 
     broadcastKeyboardEvent();
+}
+
+void EventsHandler::addMouseListener(MouseListener* obj) {
+    _mouseListener.push_back(obj);
+}
+
+void EventsHandler::broadcastMouseEvent(double xpos, double ypos) {
+    for(auto& obj : _mouseListener )
+        obj->mouseMoved(xpos, ypos);
+
+}
+
+void EventsHandler::mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+
+    broadcastMouseEvent(xpos, ypos);
 }

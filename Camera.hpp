@@ -8,11 +8,14 @@
 
 #include "EventsHandler.hpp"
 
-class Camera : public KeyboardListener {
+class Camera : public KeyboardListener, public MouseListener {
     private :
         glm::vec3 _pos;
         glm::vec3 _front;
         glm::vec3 _up;
+
+        GLfloat _yaw;
+        GLfloat _pitch;
 
     public :
         Camera(glm::vec3 pos);
@@ -28,6 +31,7 @@ class Camera : public KeyboardListener {
 
         //Events
         virtual void keyPressed(bool* keys);
+        virtual void mouseMoved(double xpos, double ypos);
 
 
 

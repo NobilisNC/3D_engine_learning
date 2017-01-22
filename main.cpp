@@ -38,10 +38,12 @@ int main()
 
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Test", nullptr, nullptr);
     glfwMakeContextCurrent(window);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 
     EventsHandler::init();
     glfwSetKeyCallback(window, EventsHandler::key_callback);
-    EventsHandler::addKeyboardListener(&cam1);
+    glfwSetCursorPosCallback(window, EventsHandler::mouse_callback); 
 
     glewExperimental = GL_TRUE;
 
