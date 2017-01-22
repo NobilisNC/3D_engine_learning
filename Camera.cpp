@@ -2,7 +2,9 @@
 
 
 Camera::Camera(glm::vec3 pos) : _pos(pos), _front(0.0f, 0.0f, -1.0f), _up(0.0f, 1.0f, 0.0f)
-{}
+{
+
+}
 
 glm::mat4 Camera::getView() {
     return glm::lookAt(_pos, _pos + _front, _up);
@@ -12,7 +14,7 @@ glm::mat4 Camera::getView() {
 
 void Camera::keyPressed(bool* keys) {
 
-    GLfloat speed = 0.5f;
+    GLfloat speed = 5.0f * EventsHandler::deltaTimeFrame;
 
     if(keys[GLFW_KEY_W])
         forward(speed);

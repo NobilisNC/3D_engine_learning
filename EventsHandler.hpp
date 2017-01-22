@@ -14,10 +14,11 @@ class EventsHandler {
     private :
         static std::vector<KeyboardListener*> _keyboardListener;
         static bool* _keys;
-
         static void broadcastKeyboardEvent();
 
     public :
+        static GLfloat deltaTimeFrame;
+
         static void init();
         static void addKeyboardListener(KeyboardListener* obj);
         static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);

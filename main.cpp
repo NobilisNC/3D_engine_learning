@@ -20,7 +20,7 @@
 
 
 Camera cam1(glm::vec3(0.0f, 0.0f, 5.0f));
-GLfloat deltaTime = 0.0f;
+
 
 
 const GLuint WIDTH = 800, HEIGHT = 600;
@@ -150,7 +150,7 @@ glm::vec3 cubePositions[] = {
     while (!glfwWindowShouldClose(window))
     {
         GLfloat currentFrame = (GLfloat)glfwGetTime();
-        deltaTime = currentFrame - lastFrame;
+        EventsHandler::deltaTimeFrame = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
         glfwPollEvents();

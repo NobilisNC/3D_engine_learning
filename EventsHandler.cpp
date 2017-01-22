@@ -2,6 +2,7 @@
 
 bool* EventsHandler::_keys = nullptr;
 std::vector<KeyboardListener*> EventsHandler::_keyboardListener = std::vector<KeyboardListener*> ();
+ GLfloat EventsHandler::deltaTimeFrame = 0.0f;
 
 void EventsHandler::init() {
     _keys = new bool[1024];
