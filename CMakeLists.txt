@@ -6,6 +6,11 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(EXECUTABLE_OUTPUT bin/${CMAKE_BUILD_TYPE})
 
+file(
+        GLOB_RECURSE
+        includeFiles
+        ./include/*.hpp
+        )
 
 file(
 	GLOB_RECURSE
@@ -13,11 +18,7 @@ file(
 	./src/*.cpp
 	)
 
-file(
-	GLOB_RECURSE 
-	includeFiles
-	./include/*.hpp
-	)
+
 
 include_directories(include/)
 

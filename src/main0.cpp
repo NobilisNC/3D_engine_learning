@@ -17,6 +17,7 @@
 #include "Camera.hpp"
 #include "EventsHandler.hpp"
 #include "Debug.hpp"
+#include "Material.hpp"
 
 const std::string DATA_PATH = "/home/nobilis/coding/perso/c++/openGL/";
 
@@ -58,6 +59,8 @@ int main()
 
     Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader");
     Shader lightSourceShader(DATA_PATH +"data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/source_light.shader");
+    Material lightMaterial{{30, 30, 30}, Color::yellow, {0,0,0}};
+    Material cubeMaterial{Color::blue, Color::cyan, Color::white};
 
 
     glm::mat4 projection;
@@ -126,8 +129,8 @@ int main()
     glBindVertexArray(0);
 
     glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-    glm::vec3 lightColor(1.f,1.f, 1.f);
-    glm::vec3 objectColor(1.0f, 0.5f, 0.31f);
+    glm::vec3 lightColor(0.f,1.f, 0.f);
+
 
     glBindVertexArray(lightVAO);
         glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
@@ -158,17 +161,18 @@ int main()
         lightingShader.uniform("view", view);
         lightingShader.uniform("model", model);
         lightingShader.uniform("projection", projection);
-        lightingShader.uniform("objectColor", objectColor);
-        lightingShader.uniform("lightColor", lightColor);
-        lightingShader.uniform("lightPos", lightPos);
+        //lightingShader.uniform("objectColor", objectColor);
+        lightingShader.uniform("material", cubeMaterial);
+
+        lightingShader.uniform("light", lightMaterial);
+        lightingShader.uniform("light.pos", lightPos);
+
         lightingShader.uniform("viewPos", cam1.position());
 
 
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
-
-
 
 
         // --- lighting SOURCE --- //
@@ -185,7 +189,7 @@ int main()
         lightSourceShader.uniform("view", view);
         lightSourceShader.uniform("model", model);
         lightSourceShader.uniform("projection", projection);
-
+        lightSourceShader.uniform("lightColor", lightMaterial.diffuse.toVec3());
         glBindVertexArray(lightVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
         glBindVertexArray(0);
