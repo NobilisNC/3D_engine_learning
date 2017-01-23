@@ -30,7 +30,7 @@ class Shader {
             uniform(name + ".ambient",   mat.ambient.toVec3());
             uniform(name + ".diffuse",   mat.diffuse.toVec3());
             uniform(name + ".specular",  mat.specular.toVec3());
-            uniform(name + ".shininess",  16.0f);
+            uniform(name + ".shininess",  32.0f);
 
         }
 
