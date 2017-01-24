@@ -26,11 +26,19 @@ class Shader {
         inline void uniform(std::string name, GLint i)          {glUniform1i(glGetUniformLocation(_program, name.c_str()),  i);                         }
         inline void uniform(std::string name,const  glm::mat4& m){glUniformMatrix4fv(glGetUniformLocation(_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(m));}
 
-        inline void uniform(std::string name, const Material& mat) {
+        inline void uniform(std::string name, const Material& mat, bool textured = false, GLint nb = 0) {
             uniform(name + ".ambient",   mat.ambient.toVec3());
-            uniform(name + ".diffuse",   mat.diffuse.toVec3());
-            uniform(name + ".specular",  mat.specular.toVec3());
-            uniform(name + ".shininess",  32.0f);
+            uniform(name + ".shininess",  mat.shininess);
+            if(!textured) {
+                uniform(name + ".diffuse",   mat.diffuse.toVec3());
+                uniform(name + ".specular",  mat.specular.toVec3());
+            } else {
+                mat.text_diff->bind(nb);
+                uniform(name + ".diffuse", nb);
+                nb++;
+                mat.text_spec->bind(nb);
+                uniform(name + ".specular", nb);
+            }
 
         }
 

@@ -64,8 +64,10 @@ int main()
     Texture cubeTexture(DATA_PATH +"data/textures/container2.png");
     Texture cubeTexture_spec(DATA_PATH +"data/textures/container2_specular.png", Texture::SPECULAR);
 
-    Material lightMaterial{{100, 100, 100}, Color::white, {200,200,200}};
-    Material cubeMaterial{{100,100,100}, Color::white, Color::white};
+    Material lightMaterial{{100, 100, 100}, Color::yellow, {200,200,200}};
+    Material cubeMaterial{{0,0,100}, Color::white, Color::white};
+    Material cubeMaterial2{{100,100,100}, Color::blue, Color::blue};
+    cubeMaterial2.setTextured(&cubeTexture, &cubeTexture_spec);
 
 
     glm::mat4 projection;
@@ -120,8 +122,13 @@ int main()
 
     Mesh cubeMesh(verticesCube);
     cubeMesh.addMaterial(&cubeMaterial);
-    cubeMesh.addTexture(&cubeTexture);
-    cubeMesh.addTexture(&cubeTexture_spec);
+    cubeMesh.addMaterial(&cubeMaterial2);
+    //cubeMesh.addTexture(&cubeTexture);
+    //cubeMesh.addTexture(&cubeTexture_spec);
+
+    Mesh lightMesh(verticesCube);
+    lightMesh.addMaterial(&lightMaterial);
+
 
     GLuint cubeVBO;
     GLuint cubeVAO, lightVAO;
@@ -172,19 +179,16 @@ int main()
 
 
         lightingShader.use();
-        cubeTexture.bind();
-        cubeTexture_spec.bind(1);
         glm::mat4 model;
         model = glm::translate(model, glm::vec3(0.0f));
 
         lightingShader.uniform("view", view);
         lightingShader.uniform("model", model);
         lightingShader.uniform("projection", projection);
+
         lightingShader.uniform("light", lightMaterial);
         lightingShader.uniform("light.pos", lightPos);
-
         lightingShader.uniform("viewPos", cam1.position());
-
 
         cubeMesh.draw(lightingShader);
 
@@ -204,9 +208,9 @@ int main()
         lightSourceShader.uniform("model", model);
         lightSourceShader.uniform("projection", projection);
         lightSourceShader.uniform("lightColor", lightMaterial.diffuse.toVec3());
-        glBindVertexArray(lightVAO);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
-        glBindVertexArray(0);
+
+        lightMesh.draw(lightSourceShader);
+
 
 
         //glCheckError(__FILE__, __LINE__);

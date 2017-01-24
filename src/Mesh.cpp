@@ -31,24 +31,26 @@ Mesh::~Mesh()
 
 void Mesh::draw(Shader &shader)
 {
+
     shader.use();
-
+    unsigned nb_textured = 0;
     for(GLint i = 0; i < _materials.size(); i++) {
-        std::string name = "materials[" + std::to_string(i) + "]";
-        shader.uniform(name, *_materials[i]);
+        if (_materials[i]->isTextured()) {
+            std::string name = "texMaterials[" + std::to_string(i) + "]";
+            shader.uniform(name, *_materials[i], true, nb_textured );
+            nb_textured += 2;
+        } else {
+            std::string name = "materials[" + std::to_string(i) + "]";
+            shader.uniform(name, *_materials[i] );
+        }
     }
+    GLint nb_textured_materials = nb_textured / 2;
+    GLint nb_materials = _materials.size() - nb_textured_materials  ;
+
+    shader.uniform("dynamic_nb_materials", nb_materials);
+    shader.uniform("dynamic_nb_textured_materials", nb_textured_materials);
 
 
-    for(GLint i = 0; i < _textures.size(); i++) {
-        std::string name = "materials[" + std::to_string(i) + "]";
-        shader.uniform(name, *_materials[i]);
-        _textures[i]->bind(i);
-
-        if(_textures[i]->getType() == Texture::DIFFUSE)
-            shader.uniform(name + ".diffuse", i);
-        else if (_textures[i]->getType() == Texture::SPECULAR)
-            shader.uniform(name + ".specular", i);
-    }
 
     glBindVertexArray(_VAO);
     glDrawArrays(GL_TRIANGLES, 0, _vertices.size());
