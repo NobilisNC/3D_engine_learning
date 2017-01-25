@@ -1,7 +1,10 @@
 #version 330 core
 
-#define NB_MATERIALS 15
+#define NB_MATERIALS 5
 #define NB_TEXTURED_MATERIALS 5
+
+const vec3 DEFAULT_COLOR = vec3(0.0f, 0.0f, 0.0f);
+const float DEFAULT_SHININESS = 16.0f;
 
 struct Material {
     vec3 ambient;
@@ -34,8 +37,9 @@ in vec2 TexCoord;
 
 uniform vec3 viewPos;
 
-uniform Material materials[NB_MATERIALS];
 uniform TexturedMaterial texMaterials[NB_TEXTURED_MATERIALS];
+uniform Material materials[NB_MATERIALS];
+
 
 uniform int nb_materials_dyn = NB_MATERIALS;
 uniform int nb_textured_materials_dyn = NB_TEXTURED_MATERIALS;
@@ -56,7 +60,7 @@ void main()
 	vec3 debug = vec3(1.0f, 1.0f, 1.0f);
         vec3 _debug;
 
-	if (nb_materials_dyn > 0) {
+        /*if (nb_materials_dyn > 0) {
             mixed_ambient = materials[0].ambient;
             mixed_diffuse = materials[0].diffuse;
             mixed_specular = materials[0].specular;
@@ -68,20 +72,23 @@ void main()
             mixed_specular = vec3(texture(texMaterials[0].specular, TexCoord));
             mixed_shininess = texMaterials[0].shininess;
             begin_text = 1;
-	}
+        }*/
 
-    for(int i = begin_mat; i < nb_materials_dyn; i++) {
+    /*for(int i = begin_mat; i < nb_materials_dyn; i++) {
 
         mixed_ambient = mixed_ambient * materials[i].ambient;
         mixed_diffuse = mix(mixed_diffuse, materials[i].diffuse, 0.5f);
         mixed_specular = min(mixed_specular,materials[i].specular);
         mixed_shininess = min(mixed_shininess, materials[i].shininess);
         debug = vec3(1.0f, 1.0f, 1.0f);
-    }
+    }*/
 
 
 
     for(int i = begin_text; i < nb_textured_materials_dyn; i++) {
+
+        if(i == 0)
+            debug = vec3(1.0f, 0.f, 0.f);
 
             debug = vec3(texture(texMaterials[i].diffuse, TexCoord));
             //mixed_ambient = mixed_ambient * texMaterials[i].ambient;

@@ -28,7 +28,7 @@ class Shader {
         inline void uniform(std::string name, GLint i)          {gl::Uniform1i(gl::GetUniformLocation(_program, name.c_str()),  i);                         }
         inline void uniform(std::string name,const  glm::mat4& m){gl::UniformMatrix4fv(gl::GetUniformLocation(_program, name.c_str()), 1, false, glm::value_ptr(m));}
 
-        inline void uniform(std::string name, const Material& mat, bool textured = false, GLint nb = 0) {
+        inline void uniform(std::string name, const Material& mat, bool textured = false, int nb = 0) {
             uniform(name + ".ambient",   mat.ambient.toVec3());
             uniform(name + ".shininess",  mat.shininess);
             if(!textured) {

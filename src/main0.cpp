@@ -64,7 +64,8 @@ int main()
     gl::Viewport(0, 0, width, height);
 
 
-    Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader");
+    //Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader");
+    Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/bug.shader");
     Shader lightSourceShader(DATA_PATH +"data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/source_light.shader");
 
     Texture cubeTexture(DATA_PATH +"data/textures/container2.png");
@@ -129,6 +130,7 @@ int main()
     Mesh cubeMesh(verticesCube);
     cubeMesh.addMaterial(&cubeMaterial);
     cubeMesh.addMaterial(&cubeMaterial2);
+    //cubeMesh.addMaterial(&cubeMaterial2);
     //cubeMesh.addTexture(&cubeTexture);
     //cubeMesh.addTexture(&cubeTexture_spec);
 

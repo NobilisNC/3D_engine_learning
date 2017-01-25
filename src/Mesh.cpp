@@ -34,7 +34,7 @@ void Mesh::draw(Shader &shader)
 
     shader.use();
     unsigned nb_textured = 0;
-    for(GLint i = 0; i < _materials.size(); i++) {
+    for(int i = 0; i < _materials.size(); i++) {
         if (_materials[i]->isTextured()) {
 
             std::string name = "texMaterials[" + std::to_string(nb_textured) + "]";
