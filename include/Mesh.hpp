@@ -1,7 +1,7 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include "GL/glew.h"
+#include "gl_core_3_3.hpp"
 #include "Vertex.hpp"
 #include "Texture.hpp"
 #include "Material.hpp"

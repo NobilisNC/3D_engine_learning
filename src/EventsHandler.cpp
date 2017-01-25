@@ -23,7 +23,7 @@ void EventsHandler::addKeyboardListener(KeyboardListener* obj) {
 
 void EventsHandler::key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+        glfwSetWindowShouldClose(window, true);
 
     if(action == GLFW_PRESS)
         _keys[key] = true;

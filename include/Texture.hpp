@@ -1,8 +1,9 @@
 #pragma once
 
+
+#include "gl_core_3_3.hpp"
 #include <string>
 #include <iostream>
-#include <GL/glew.h>
 #include "SOIL/SOIL.h"
 
 

@@ -1,8 +1,6 @@
 #include <iostream>
 
-// GLEW
-//#define GLEW_STATIC
-#include <GL/glew.h>
+#include "gl_core_3_3.hpp"
 
 // GLFW
 #include <GLFW/glfw3.h>
@@ -38,7 +36,7 @@ int main()
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, false);
 
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Test", nullptr, nullptr);
     glfwMakeContextCurrent(window);
@@ -49,14 +47,22 @@ int main()
     glfwSetKeyCallback(window, EventsHandler::key_callback);
     glfwSetCursorPosCallback(window, EventsHandler::mouse_callback);
 
-    glewExperimental = GL_TRUE;
 
-    glewInit();
-    glEnable(GL_DEPTH_TEST);
+    if(!gl::sys::LoadFunctions())
+        throw 'a';
+
+    checkError();
+
+    gl::Enable(gl::DEPTH_TEST);
+
+    checkError();
+
 
     int width, height;
+
     glfwGetFramebufferSize(window, &width, &height);
-    glViewport(0, 0, width, height);
+    gl::Viewport(0, 0, width, height);
+
 
     Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader");
     Shader lightSourceShader(DATA_PATH +"data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/source_light.shader");
@@ -64,9 +70,9 @@ int main()
     Texture cubeTexture(DATA_PATH +"data/textures/container2.png");
     Texture cubeTexture_spec(DATA_PATH +"data/textures/container2_specular.png", Texture::SPECULAR);
 
-    Material lightMaterial{{100, 100, 100}, Color::yellow, {200,200,200}};
-    Material cubeMaterial{{0,0,100}, Color::white, Color::white};
-    Material cubeMaterial2{{100,100,100}, Color::blue, Color::blue};
+    Material lightMaterial({100, 100, 100}, Color::yellow, Color::white);
+    Material cubeMaterial({100,100,100}, Color::white, Color::white);
+    Material cubeMaterial2({200,100,100}, Color::blue, Color::blue);
     cubeMaterial2.setTextured(&cubeTexture, &cubeTexture_spec);
 
 
@@ -132,36 +138,17 @@ int main()
 
     GLuint cubeVBO;
     GLuint cubeVAO, lightVAO;
-    glGenBuffers(1, &cubeVBO);
-    glGenVertexArrays(1, &cubeVAO);
-    glGenVertexArrays(1, &lightVAO);
-
-    glBindVertexArray(cubeVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(verticesCube[0]) * verticesCube.size(), verticesCube.data(), GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0 );
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3*sizeof(GLfloat)) );
-        glEnableVertexAttribArray(1);
+    gl::GenBuffers(1, &cubeVBO);
+    gl::GenVertexArrays(1, &cubeVAO);
+    gl::GenVertexArrays(1, &lightVAO);
 
 
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6*sizeof(GLfloat)) );
-        glEnableVertexAttribArray(2);
-
-
-    glBindVertexArray(0);
 
     glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 
-    glBindVertexArray(lightVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, cubeVBO);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0 );
-        glEnableVertexAttribArray(0);
-    glBindVertexArray(0);
 
+    checkError();
 
 
     GLfloat lastFrame = 0.0f;
@@ -170,21 +157,25 @@ int main()
         GLfloat currentFrame = (GLfloat)glfwGetTime();
         EventsHandler::deltaTimeFrame = currentFrame - lastFrame;
         lastFrame = currentFrame;
-
         glfwPollEvents();
-        glClearColor(0.f, 0.f, 0.f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        lightingShader.use();
+
+        gl::ClearColor(0.f, 0.f, 0.f, 1.0f);
+
+        gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
 
         glm::mat4 view = cam1.getView();
 
 
-        lightingShader.use();
+
         glm::mat4 model;
         model = glm::translate(model, glm::vec3(0.0f));
 
         lightingShader.uniform("view", view);
         lightingShader.uniform("model", model);
         lightingShader.uniform("projection", projection);
+
 
         lightingShader.uniform("light", lightMaterial);
         lightingShader.uniform("light.pos", lightPos);
@@ -213,10 +204,8 @@ int main()
 
 
 
-        //glCheckError(__FILE__, __LINE__);
         glfwSwapBuffers(window);
     }
-
 
 
     glfwTerminate();

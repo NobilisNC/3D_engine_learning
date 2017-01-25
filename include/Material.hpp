@@ -14,7 +14,7 @@ struct Material
     Texture* text_diff;
     Texture* text_spec;
 
-    Material(RGBColor _ambient, RGBColor _diffuse, RGBColor _specular, GLfloat _shininess = 16.0f, Texture* _text_diff = nullptr, Texture* _text_spec = nullptr);
+    Material(RGBColor _ambient, RGBColor _diffuse, RGBColor _specular, GLfloat _shininess = 100.0f, Texture* _text_diff = nullptr, Texture* _text_spec = nullptr);
 
     inline bool isTextured() {return text_diff != nullptr && text_spec != nullptr;}
     inline void setTextured(Texture* _text_diff, Texture* _text_spec) {

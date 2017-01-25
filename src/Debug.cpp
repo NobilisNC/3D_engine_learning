@@ -8,18 +8,18 @@
 void glCheckError(const char* file, int line)
 {
 	GLenum errorCode;
-	while ((errorCode = glGetError()) != GL_NO_ERROR)
+    while ((errorCode = gl::GetError()) != gl::NO_ERROR_)
 	{
 		std::string error;
 		switch (errorCode)
 		{
-			case GL_INVALID_ENUM:					error = "INVALID_ENUM"; break;
-			case GL_INVALID_VALUE:					error = "INVALID_VALUE"; break;
-			case GL_INVALID_OPERATION:				error = "INVALID_OPERATION"; break;
-			case GL_STACK_OVERFLOW:					error = "STACK_OVERFLOW"; break;
-			case GL_STACK_UNDERFLOW:				error = "STACK_UNDERFLOW"; break;
-			case GL_OUT_OF_MEMORY:					error = "OUT_OF_MEMORY"; break;
-			case GL_INVALID_FRAMEBUFFER_OPERATION:	error = "OUT_OF_MEMORY"; break;
+            case gl::INVALID_ENUM:					error = "INVALID_ENUM"; break;
+            case gl::INVALID_VALUE:					error = "INVALID_VALUE"; break;
+            case gl::INVALID_OPERATION:				error = "INVALID_OPERATION"; break;
+            case gl::STACK_OVERFLOW:					error = "STACK_OVERFLOW"; break;
+            case gl::STACK_UNDERFLOW:				error = "STACK_UNDERFLOW"; break;
+            case gl::OUT_OF_MEMORY:					error = "OUT_OF_MEMORY"; break;
+            case gl::INVALID_FRAMEBUFFER_OPERATION:	error = "OUT_OF_MEMORY"; break;
 		}
 		std::cerr << error << " | " << file << " (" << line << ")\n";
 	}

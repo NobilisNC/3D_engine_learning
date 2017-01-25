@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <GL/glew.h>
+#include "gl_core_3_3.hpp"
 #include <GLFW/glfw3.h>
 #include <iostream>
 
