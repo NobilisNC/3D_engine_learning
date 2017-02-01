@@ -19,6 +19,8 @@ public :
 
     virtual void bind(Shader &shader);
 
+    void lightBind(Shader& shader);
+
 
     inline const RGBColor& diffuse() const {return _diffuse;}
     inline       RGBColor& diffuse()       {return _diffuse;}

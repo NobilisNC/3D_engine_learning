@@ -9,6 +9,7 @@
 #include "Camera.hpp"
 #include "SimpleMaterial.hpp"
 #include "TexturedMaterial.hpp"
+#include "Light.hpp"
 
 class MyScene : public soap::Scene
 {
@@ -26,6 +27,8 @@ private :
     soap::SimpleMaterial lightMaterial;
 
     soap::Camera cam;
+
+    soap::Light light0;
 
 
 public:

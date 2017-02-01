@@ -19,11 +19,11 @@ public :
 
         virtual void bind(Shader &shader);
 
-        inline Texture* diffuse() const {return _diffuse;}
-        inline       Texture*& diffuse()       {return _diffuse;}
+        inline Texture*  diffuse() const {return _diffuse;}
+        inline Texture*& diffuse()       {return _diffuse;}
 
-        inline Texture* specular() const {return _specular;}
-        inline       Texture*& specular()       {return _specular;}
+        inline Texture* specular()  const {return _specular;}
+        inline Texture*& specular()       {return _specular;}
 };
 
 

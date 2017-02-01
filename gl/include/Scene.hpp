@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Mesh.hpp"
+#include "Light.hpp"
 
 namespace soap {
 
@@ -16,6 +17,7 @@ private :
     int _width;
     int _height;
     std::vector<Mesh*> _meshes;
+    std::vector<Light*> _lights;
 
     glm::mat4 _projection;
     glm::mat4 _model;
@@ -49,6 +51,7 @@ public :
     inline int height() const {return _height;}
 
     inline void addMesh(Mesh* mesh) { _meshes.push_back(mesh);}
+     inline void addLight(Light* light) { _lights.push_back(light);}
 
 };
 

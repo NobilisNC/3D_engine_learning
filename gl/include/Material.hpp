@@ -20,6 +20,7 @@ protected :
     RGBColor    _ambient;
     float       _shininess;
 
+
 public :
     Material(RGBColor ambient, float shininess);
     virtual ~Material() = 0;

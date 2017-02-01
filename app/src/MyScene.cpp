@@ -11,7 +11,8 @@ MyScene::MyScene(int h, int w) :
     textCube_spec(DATA_PATH +"data/textures/container2_specular.png", soap::Texture::SPECULAR),
     cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
     lightMaterial({100,100,100}, soap::Color::blue, soap::Color::blue, 16),
-    cam(glm::vec3(0.0f, 0.0f, 5.0f))
+    cam(glm::vec3(0.0f, 0.0f, 5.0f)),
+    light0(glm::vec3(0,0,0), &lightMaterial, soap::LightType::DEFAULT)
 {
 
     this->init();
@@ -78,18 +79,14 @@ void MyScene::init()
 void MyScene::render()
 {
 
-    static glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
     setModel(glm::mat4());
     objectShader.use();
     setView(cam.getView());
     setModel( glm::translate(model(), glm::vec3(0.0f)));
     sendMatrix(objectShader);
-    objectShader.uniform("light.ambient", lightMaterial.ambient().toVec3() );
-    objectShader.uniform("light.diffuse", lightMaterial.diffuse().toVec3());
-    objectShader.uniform("light.specular", lightMaterial.specular().toVec3());
-    objectShader.uniform("light.shininess", lightMaterial.shininess());
 
-    objectShader.uniform("light.pos", lightPos);
+    light0.bind(objectShader);
+
     objectShader.uniform("viewPos", cam.position());
     cube.draw(objectShader);
 
@@ -99,16 +96,15 @@ void MyScene::render()
 
     GLfloat radius = 1.f;
 
-    lightPos.x = sin(glfwGetTime()) * radius;
-    lightPos.y = sin(glfwGetTime()) * radius;
-    lightPos.z = cos(glfwGetTime()) * radius;
+    light0.position().x = sin(glfwGetTime()) * radius;
+    light0.position().y = sin(glfwGetTime()) * radius;
+    light0.position().z = cos(glfwGetTime()) * radius;
     setModel(glm::mat4());
 
-    setModel( glm::translate(model(), lightPos));
+    setModel( glm::translate(model(), light0.position()));
     setModel(glm::scale(model(), glm::vec3(0.2f)));
 
     sendMatrix(lightShader);
-    lightShader.uniform("lightColor", lightMaterial.diffuse().toVec3());
     cubeLight.draw(lightShader);
 }
 
