@@ -7,6 +7,8 @@
 #include "Shader.hpp"
 #include "Mesh.hpp"
 #include "Camera.hpp"
+#include "SimpleMaterial.hpp"
+#include "TexturedMaterial.hpp"
 
 class MyScene : public soap::Scene
 {
@@ -20,8 +22,8 @@ private :
     soap::Texture textCube;
     soap::Texture textCube_spec;
 
-    soap::Material cubeMaterial;
-    soap::Material lightMaterial;
+    soap::TexturedMaterial cubeMaterial;
+    soap::SimpleMaterial lightMaterial;
 
     soap::Camera cam;
 

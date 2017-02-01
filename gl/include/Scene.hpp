@@ -54,4 +54,4 @@ public :
 
 }
 
-#endif // SCENE_HPP
+#endif

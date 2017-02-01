@@ -1,28 +1,38 @@
-#ifndef MATERIAL_H
-#define MATERIAL_H
+#ifndef MATERIAL_HPP
+#define MATERIAL_HPP
 
 #include "glm/glm.hpp"
 #include "Color.hpp"
-#include "Texture.hpp"
+#include "Shader.hpp"
+
+
 namespace soap {
 
 
-struct Material
+class Material
 {
-    RGBColor ambient;
-    RGBColor diffuse;
-    RGBColor specular;
-    GLfloat shininess;
-    Texture* text_diff;
-    Texture* text_spec;
+public :
+    enum type {
+        SIMPLE, TEXTURED
+    };
 
-    Material(RGBColor _ambient, RGBColor _diffuse, RGBColor _specular, GLfloat _shininess = 100.0f, Texture* _text_diff = nullptr, Texture* _text_spec = nullptr);
+protected :
+    RGBColor    _ambient;
+    float       _shininess;
 
-    inline bool isTextured() {return text_diff != nullptr && text_spec != nullptr;}
-    inline void setTextured(Texture* _text_diff, Texture* _text_spec) {
-        text_diff = _text_diff;
-        text_spec = _text_spec;
-    }
+public :
+    Material(RGBColor ambient, float shininess);
+    virtual ~Material() = 0;
+
+    virtual void bind(Shader& shader) = 0;
+
+
+    inline const RGBColor& ambient() const {return _ambient;}
+    inline       RGBColor& ambient()       {return _ambient;}
+
+    inline const float& shininess() const {return _shininess;}
+    inline       float& shininess()       {return _shininess;}
+
 };
 
 }

@@ -33,7 +33,7 @@ uniform vec3 viewPos;
 
 uniform LightData light;
 
-uniform bool isTextured;
+uniform bool isTextured = false;
 
 
 

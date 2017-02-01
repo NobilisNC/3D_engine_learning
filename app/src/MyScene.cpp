@@ -9,11 +9,11 @@ MyScene::MyScene(int h, int w) :
     objectShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader"),
     textCube(DATA_PATH +"data/textures/container2.png"),
     textCube_spec(DATA_PATH +"data/textures/container2_specular.png", soap::Texture::SPECULAR),
-    cubeMaterial({100, 100, 100}, {200,200,200}, soap::Color::white),
-    lightMaterial({100,100,100}, soap::Color::blue, soap::Color::blue),
+    cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
+    lightMaterial({100,100,100}, soap::Color::blue, soap::Color::blue, 16),
     cam(glm::vec3(0.0f, 0.0f, 5.0f))
 {
-    cubeMaterial.setTextured(&textCube, &textCube_spec);
+
     this->init();
 }
 
@@ -84,7 +84,11 @@ void MyScene::render()
     setView(cam.getView());
     setModel( glm::translate(model(), glm::vec3(0.0f)));
     sendMatrix(objectShader);
-    objectShader.uniform("light", lightMaterial);
+    objectShader.uniform("light.ambient", lightMaterial.ambient().toVec3() );
+    objectShader.uniform("light.diffuse", lightMaterial.diffuse().toVec3());
+    objectShader.uniform("light.specular", lightMaterial.specular().toVec3());
+    objectShader.uniform("light.shininess", lightMaterial.shininess());
+
     objectShader.uniform("light.pos", lightPos);
     objectShader.uniform("viewPos", cam.position());
     cube.draw(objectShader);
@@ -104,7 +108,7 @@ void MyScene::render()
     setModel(glm::scale(model(), glm::vec3(0.2f)));
 
     sendMatrix(lightShader);
-    lightShader.uniform("lightColor", lightMaterial.diffuse.toVec3());
+    lightShader.uniform("lightColor", lightMaterial.diffuse().toVec3());
     cubeLight.draw(lightShader);
 }
 

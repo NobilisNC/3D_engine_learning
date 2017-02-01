@@ -1,4 +1,5 @@
-#pragma once
+#ifndef EVENTSHANDLER_HPP
+#define EVENTSHANDLER_HPP
 
 #include <vector>
 #include "gl_core_3_3.hpp"
@@ -42,3 +43,5 @@ class EventsHandler {
 };
 
 }
+
+#endif

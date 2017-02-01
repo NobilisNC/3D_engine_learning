@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SHADER_HPP
+#define SHADER_HPP
 
 #include <string>
 #include <fstream>
@@ -10,7 +11,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Material.hpp"
+
 #include "Debug.hpp"
 
 namespace soap {
@@ -30,18 +31,11 @@ public :
     inline void uniform(std::string name, glm::vec4 vec)    {gl::Uniform4f(gl::GetUniformLocation(_program, name.c_str()),  vec.x, vec.y, vec.z, vec.w);}
     inline void uniform(std::string name, GLint i)          {gl::Uniform1i(gl::GetUniformLocation(_program, name.c_str()),  i);                         }
     inline void uniform(std::string name,const  glm::mat4& m){gl::UniformMatrix4fv(gl::GetUniformLocation(_program, name.c_str()), 1, false, glm::value_ptr(m));}
-
-    inline void uniform(std::string name, const Material& mat, bool textured = false) {
-        uniform(name + ".ambient",   mat.ambient.toVec3());
-        uniform(name + ".shininess",  mat.shininess);
-        uniform(name + ".diffuse",   mat.diffuse.toVec3());
-        uniform(name + ".specular",  mat.specular.toVec3());
-    }
-
-
     inline void uniform(std::string name, bool boolean) {gl::Uniform1f(gl::GetUniformLocation(_program, name.c_str()), boolean);                        }
 
     inline GLuint getProgram() const {return _program;}
 };
 
 }
+
+#endif

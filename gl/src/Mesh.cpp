@@ -49,35 +49,12 @@ Mesh::~Mesh()
 
 void Mesh::draw(Shader &shader)
 {
-    const int ID_TEXTURE_DIFFUSE = 1;
-    const int ID_TEXTURE_SPECULAR = 2;
+
 
 
     shader.use();
 
-
-
-        std::string name = "material";
-
-        bool isTextured = _material->isTextured();
-        if (isTextured)
-            name = "texMaterial";
-
-        shader.uniform("isTextured", isTextured);
-        shader.uniform(name + ".ambient", _material->ambient.toVec3());
-        shader.uniform(name + ".shininess", _material->shininess);
-
-        if(isTextured) {
-
-            _material->text_diff->bind(ID_TEXTURE_DIFFUSE);
-            _material->text_spec->bind(ID_TEXTURE_SPECULAR);
-            shader.uniform(name + ".diffuse", ID_TEXTURE_DIFFUSE);
-            shader.uniform(name + ".specular", ID_TEXTURE_SPECULAR);
-        } else {
-            shader.uniform(name + ".diffuse", _material->diffuse.toVec3());
-            shader.uniform(name + ".specular", _material->specular.toVec3());
-        }
-
+    _material->bind(shader);
 
     gl::BindVertexArray(_VAO);
         gl::DrawArrays(gl::TRIANGLES, 0, _vertices.size());

@@ -1,5 +1,5 @@
-#ifndef MESH_H
-#define MESH_H
+#ifndef MESH_HPP
+#define MESH_HPP
 
 #include "gl_core_3_3.hpp"
 #include "Vertex.hpp"
@@ -26,7 +26,7 @@ public:
     ~Mesh();
 
     inline void setMaterial(Material* material) noexcept {_material = material;}
-    inline void setVertices(const VertexArray& vertices) {std::cerr << "test" << std::endl;_vertices = vertices; construct();}
+    inline void setVertices(const VertexArray& vertices) {_vertices = vertices; construct();}
 
 
 

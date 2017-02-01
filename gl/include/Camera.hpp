@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CAMERA_HPP
+#define CAMERA_HPP
 
 #include "gl_core_3_3.hpp"
 #include <GLFW/glfw3.h>
@@ -39,3 +40,5 @@ class Camera : public KeyboardListener, public MouseListener {
 };
 
 }
+
+#endif
