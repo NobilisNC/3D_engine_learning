@@ -9,8 +9,12 @@ MyScene::MyScene(int h, int w) :
     objectShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader"),
     textCube(DATA_PATH +"data/textures/container2.png"),
     textCube_spec(DATA_PATH +"data/textures/container2_specular.png", soap::Texture::SPECULAR),
+    grass(DATA_PATH+"data/textures/grass.png", soap::Texture::DIFFUSE),
+    default_spec(DATA_PATH+"data/textures/default_spec.png", soap::Texture::SPECULAR),
     cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
-    lightMaterial({100,100,100}, soap::Color::blue, soap::Color::blue, 16),
+    lightMaterial({100,100,100}, soap::Color::white, soap::Color::white, 16),
+    //floorMaterial({20, 100, 20}, {100, 255, 100}, {30,30,30}, 264),
+    floorMaterial({100,100,100}, &grass, &default_spec, 2),
     cam(glm::vec3(0.0f, 0.0f, 5.0f)),
     light0(glm::vec3(0,0,0), &lightMaterial, soap::LightType::DEFAULT)
 {
@@ -72,6 +76,9 @@ void MyScene::init()
 
     cubeLight.setVertices(vertices);
     cubeLight.setMaterial(&lightMaterial);
+
+    floor.setVertices(vertices);
+    floor.setMaterial(&floorMaterial);
 }
 
 
@@ -79,21 +86,34 @@ void MyScene::init()
 void MyScene::render()
 {
 
-    setModel(glm::mat4());
+
     objectShader.use();
     setView(cam.getView());
-    setModel( glm::translate(model(), glm::vec3(0.0f)));
-    sendMatrix(objectShader);
-
     light0.bind(objectShader);
-
     objectShader.uniform("viewPos", cam.position());
+
+
+
+    setModel(glm::mat4());
+    setModel( glm::translate(model(), glm::vec3(0.0f, 0.0f, 0.0f)));
+    sendMatrix(objectShader);
     cube.draw(objectShader);
 
 
-    // --- lighting SOURCE --- //
-    lightShader.use();
+    setModel(glm::mat4());
+    setModel( glm::translate(model(), glm::vec3(0.0f, -2.f, 0.0f)));
+    setModel(glm::scale(model(), glm::vec3(10.f, 0.2f, 10.f)));
+    sendMatrix(objectShader);
+    floor.draw(objectShader);
 
+
+
+
+
+
+    // --- lighting SOURCE --- //
+
+    lightShader.use();
     GLfloat radius = 1.f;
 
     light0.position().x = sin(glfwGetTime()) * radius;

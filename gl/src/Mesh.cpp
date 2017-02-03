@@ -49,9 +49,6 @@ Mesh::~Mesh()
 
 void Mesh::draw(Shader &shader)
 {
-
-
-
     shader.use();
 
     _material->bind(shader);

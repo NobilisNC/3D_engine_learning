@@ -17,5 +17,5 @@ Light::~Light()
 void Light::bind(Shader &shader)
 {
     _material->lightBind(shader);
-    shader.uniform("light.pos", _position);
+    shader.uniform("light.position", _position);
 }

@@ -15,6 +15,7 @@ SimpleMaterial::~SimpleMaterial()
 
 void SimpleMaterial::bind(Shader &shader)
 {
+    shader.uniform("isTextured", false);
     shader.uniform("material.ambient", _ambient.toVec3());
     shader.uniform("material.diffuse", _diffuse.toVec3());
     shader.uniform("material.specular", _specular.toVec3());

@@ -14,12 +14,18 @@ uniform struct TexturedMaterial {
     float shininess;
 } texMaterial;
 
-struct LightData {
-    vec3 pos;
+struct Light {
+    vec3 position;
 
     vec3 ambient;
     vec3 diffuse;
     vec3 specular;
+
+    float constant;
+    float linear;
+    float quadratic;
+
+    
 };
 
 
@@ -31,7 +37,7 @@ in vec2 TexCoord;
 
 uniform vec3 viewPos;
 
-uniform LightData light;
+uniform Light light;
 
 uniform bool isTextured = false;
 
@@ -58,7 +64,7 @@ void main()
 
     // Diffuse
     vec3 norm = normalize(Normal);
-    vec3 lightDir = normalize(light.pos - FragPos);
+    vec3 lightDir = normalize(light.position - FragPos);
     float diff = max(dot(norm, lightDir), 0.0);
     vec3 diffuse = light.diffuse * diff * mat_diffuse;
 
@@ -71,5 +77,5 @@ void main()
 
 
 	  vec3 result = ambient + diffuse + specular;
-    color = vec4(result, 1.0f);
+      color = vec4(result, 1.0f);
 }
