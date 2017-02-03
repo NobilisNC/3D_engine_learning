@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-project(soap-gl)
+project(soap-core)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
@@ -18,10 +18,10 @@ file(
 	./include/*.hpp
 	)
 
+include_directories(include/)
 
-include_directories(include/ ../core/include/)
-add_library(soap-gl ${includeFiles} ${sourceFiles})
-target_link_libraries(soap-gl soap-core -lSOIL -lGL -lglfw)
+add_library(soap-core ${includeFiles} ${sourceFiles})
+target_link_libraries(soap-core)
 
 
 

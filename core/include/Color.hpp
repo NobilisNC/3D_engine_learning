@@ -6,7 +6,6 @@
 
 namespace soap {
 
-
 struct RGBColor
 {
     uint8_t r;
