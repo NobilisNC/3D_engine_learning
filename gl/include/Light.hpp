@@ -6,10 +6,6 @@
 
 namespace soap {
 
-enum class LightType {
-    DEFAULT, TEST
-};
-
 class Light
 {
 public :
@@ -18,13 +14,13 @@ public :
 protected :
     SimpleMaterial* _material;
     glm::vec3 _position;
-    LightType _type;
+
 
 public :
-    Light(glm::vec3 position, SimpleMaterial *material, LightType type = LightType::DEFAULT);
+    Light(glm::vec3 position, SimpleMaterial *material);
     ~Light();
 
-    virtual void bind(Shader &shader);
+    virtual void bind(Shader &shader) = 0;
 
     inline const glm::vec3& position() const {return _position;}
     inline       glm::vec3& position()       {return _position;}
@@ -32,8 +28,6 @@ public :
     inline SimpleMaterial*  material() const {return _material;}
     inline SimpleMaterial*& material()       {return _material;}
 
-    inline const LightType& type() const {return _type;}
-    inline       LightType& type()       {return _type;}
 
 };
 

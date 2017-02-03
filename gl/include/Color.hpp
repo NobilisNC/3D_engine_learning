@@ -28,6 +28,7 @@ namespace Color {
     constexpr RGBColor yellow   =   RGBColor{255, 255,   0};
     constexpr RGBColor cyan     =   RGBColor{  0, 255, 255};
     constexpr RGBColor magenta  =   RGBColor{255,   0, 255};
+    constexpr RGBColor gray     =   RGBColor{100, 100, 100};
 
 }
 

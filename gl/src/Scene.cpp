@@ -37,6 +37,16 @@ void Scene::sendMatrix(Shader& shader)
     shader.uniform("projection", _projection);
 }
 
+void Scene::bindLights(Shader &shader)
+{
+    for(unsigned i = 0; i < _lights.size(); i++ )
+        _lights[i]->bind(shader);
+
+    shader.uniform("nr_directional_lights", DirectionalLight::numberBinded());
+    shader.uniform("nr_point_lights", PointLight::numberBinded());
+    shader.uniform("nr_spot_lights", SpotLight::numberBinded());
+}
+
 void Scene::_init()
 {
     gl::ClearColor(0.f, 0.f, 0.f, 1.0f);
@@ -44,6 +54,8 @@ void Scene::_init()
 
 void Scene::_render()
 {
+    DirectionalLight::reset();
+    PointLight::reset();
 
     gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
     render();

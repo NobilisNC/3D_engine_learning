@@ -8,6 +8,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Mesh.hpp"
 #include "Light.hpp"
+#include "DirectionalLight.hpp"
+#include "SpotLight.hpp"
+#include "PointLight.hpp"
 
 namespace soap {
 
@@ -39,6 +42,7 @@ public :
     void draw();
     void initialize();
     void sendMatrix(Shader& shader);
+    void bindLights(Shader& shader);
 
 
     inline void setProjection(glm::mat4 projection) {_projection = projection;}

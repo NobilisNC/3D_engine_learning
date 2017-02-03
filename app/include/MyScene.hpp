@@ -9,7 +9,7 @@
 #include "Camera.hpp"
 #include "SimpleMaterial.hpp"
 #include "TexturedMaterial.hpp"
-#include "Light.hpp"
+#include "DirectionalLight.hpp"
 
 class MyScene : public soap::Scene
 {
@@ -32,7 +32,8 @@ private :
 
     soap::Camera cam;
 
-    soap::Light light0;
+    soap::DirectionalLight light0;
+    soap::PointLight plight0;
 
 
 public:

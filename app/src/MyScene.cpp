@@ -12,11 +12,11 @@ MyScene::MyScene(int h, int w) :
     grass(DATA_PATH+"data/textures/grass.png", soap::Texture::DIFFUSE),
     default_spec(DATA_PATH+"data/textures/default_spec.png", soap::Texture::SPECULAR),
     cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
-    lightMaterial({100,100,100}, soap::Color::white, soap::Color::white, 16),
-    //floorMaterial({20, 100, 20}, {100, 255, 100}, {30,30,30}, 264),
+    lightMaterial({100,100,100}, soap::Color::red, soap::Color::red, 16),
     floorMaterial({100,100,100}, &grass, &default_spec, 2),
     cam(glm::vec3(0.0f, 0.0f, 5.0f)),
-    light0(glm::vec3(0,0,0), &lightMaterial, soap::LightType::DEFAULT)
+    light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::gray, soap::Color::white, 16)),
+    plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032)
 {
 
     this->init();
@@ -79,6 +79,11 @@ void MyScene::init()
 
     floor.setVertices(vertices);
     floor.setMaterial(&floorMaterial);
+
+    addLight(&light0);
+    addLight(&plight0);
+
+    gl::ClearColor(soap::Color::gray.r,soap::Color::gray.g,soap::Color::gray.b, 1.0f);
 }
 
 
@@ -89,7 +94,9 @@ void MyScene::render()
 
     objectShader.use();
     setView(cam.getView());
-    light0.bind(objectShader);
+
+    bindLights(objectShader);
+
     objectShader.uniform("viewPos", cam.position());
 
 
@@ -116,12 +123,12 @@ void MyScene::render()
     lightShader.use();
     GLfloat radius = 1.f;
 
-    light0.position().x = sin(glfwGetTime()) * radius;
-    light0.position().y = sin(glfwGetTime()) * radius;
-    light0.position().z = cos(glfwGetTime()) * radius;
+    //light0.position().x = sin(glfwGetTime()) * radius;
+    //light0.position().y = sin(glfwGetTime()) * radius;
+    //light0.position().z = cos(glfwGetTime()) * radius;
     setModel(glm::mat4());
 
-    setModel( glm::translate(model(), light0.position()));
+    setModel( glm::translate(model(), plight0.position()));
     setModel(glm::scale(model(), glm::vec3(0.2f)));
 
     sendMatrix(lightShader);

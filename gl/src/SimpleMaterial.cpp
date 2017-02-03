@@ -28,5 +28,4 @@ void SimpleMaterial::lightBind(Shader &shader)
     shader.uniform("light.diffuse", _diffuse.toVec3());
     shader.uniform("light.specular", _specular.toVec3());
     shader.uniform("light.shininess", _shininess);
-
 }

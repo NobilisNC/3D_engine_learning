@@ -30,6 +30,7 @@ public :
     inline void uniform(std::string name, glm::vec3 vec)    {gl::Uniform3f(gl::GetUniformLocation(_program, name.c_str()),  vec.x, vec.y, vec.z);       }
     inline void uniform(std::string name, glm::vec4 vec)    {gl::Uniform4f(gl::GetUniformLocation(_program, name.c_str()),  vec.x, vec.y, vec.z, vec.w);}
     inline void uniform(std::string name, GLint i)          {gl::Uniform1i(gl::GetUniformLocation(_program, name.c_str()),  i);                         }
+    inline void uniform(std::string name, unsigned i)       {gl::Uniform1ui(gl::GetUniformLocation(_program, name.c_str()),  i);                        }
     inline void uniform(std::string name,const  glm::mat4& m){gl::UniformMatrix4fv(gl::GetUniformLocation(_program, name.c_str()), 1, false, glm::value_ptr(m));}
     inline void uniform(std::string name, bool boolean) {gl::Uniform1f(gl::GetUniformLocation(_program, name.c_str()), boolean);                        }
 
