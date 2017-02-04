@@ -11,12 +11,14 @@ class SpotLight : public PointLight
 protected :
     static unsigned NB_LIGHT;
 
+    glm::vec3 _direction;
+
     float _cutOff;
     float _outerCutOff;
 
 
 public:
-    SpotLight(glm::vec3 position, SimpleMaterial *material, float constant, float linear, float quadratic, float cutOff, float outerCutOff);
+    SpotLight(glm::vec3 position, SimpleMaterial *material, float constant, float linear, float quadratic, glm::vec3 direction, float cutOff, float outerCutOff);
     ~SpotLight();
 
     virtual void bind(Shader &shader);

@@ -12,11 +12,12 @@ MyScene::MyScene(int h, int w) :
     grass(DATA_PATH+"data/textures/grass.png", soap::Texture::DIFFUSE),
     default_spec(DATA_PATH+"data/textures/default_spec.png", soap::Texture::SPECULAR),
     cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
-    lightMaterial({100,100,100}, soap::Color::red, soap::Color::red, 16),
+    lightMaterial({100,200,100}, soap::Color::red, {4,0,0}, 32),
     floorMaterial({100,100,100}, &grass, &default_spec, 2),
     cam(glm::vec3(0.0f, 0.0f, 5.0f)),
     light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::gray, soap::Color::white, 16)),
-    plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032)
+    plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032),
+    splight0(glm::vec3(-1,1,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 15.f)
 {
 
     this->init();
@@ -82,12 +83,12 @@ void MyScene::init()
 
     addLight(&light0);
     addLight(&plight0);
+    addLight(&splight0);
 
     gl::ClearColor(soap::Color::gray.r,soap::Color::gray.g,soap::Color::gray.b, 1.0f);
 }
 
 
-#include <iostream>
 void MyScene::render()
 {
 
@@ -128,7 +129,7 @@ void MyScene::render()
     //light0.position().z = cos(glfwGetTime()) * radius;
     setModel(glm::mat4());
 
-    setModel( glm::translate(model(), plight0.position()));
+    setModel( glm::translate(model(), splight0.position()));
     setModel(glm::scale(model(), glm::vec3(0.2f)));
 
     sendMatrix(lightShader);

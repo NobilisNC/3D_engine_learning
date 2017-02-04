@@ -34,6 +34,7 @@ private :
 
     soap::DirectionalLight light0;
     soap::PointLight plight0;
+    soap::SpotLight splight0;
 
 
 public:

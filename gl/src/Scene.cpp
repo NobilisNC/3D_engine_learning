@@ -56,6 +56,7 @@ void Scene::_render()
 {
     DirectionalLight::reset();
     PointLight::reset();
+    SpotLight::reset();
 
     gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
     render();
