@@ -1,10 +1,11 @@
-#pragma once
-
+#ifndef TEXTURE_HPP
+#define TEXTURE_HPP
 
 #include "gl_core_3_3.hpp"
 #include <string>
 #include <iostream>
-#include "SOIL/SOIL.h"
+
+
 
 namespace soap {
 
@@ -30,3 +31,5 @@ public :
 
 
 }
+
+#endif

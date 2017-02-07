@@ -9,7 +9,6 @@
 
 
 #include "Shader.hpp"
-#include "Texture.hpp"
 #include "Camera.hpp"
 #include "EventsHandler.hpp"
 #include "Debug.hpp"

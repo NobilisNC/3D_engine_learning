@@ -18,7 +18,7 @@ MyScene::MyScene(int h, int w) :
     light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::white, soap::Color::white, 16)),
     plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032),
     splight0(glm::vec3(-1,1,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 15.f),
-    nanosuit(DATA_PATH + "data/Obj/nanosuit/nanosuit.obj")
+    nanosuit(DATA_PATH + "data/Obj/Triss/Triss.obj")
 {
 
   this->init();
@@ -103,10 +103,10 @@ void MyScene::render()
 
     setModel(glm::mat4());
     setModel( glm::translate(model(), glm::vec3(.0f, -2.0f, 0.0f)));
-    setModel(glm::scale(model(), glm::vec3(.3f, 0.3f, 0.3f)));
+    setModel(glm::scale(model(), glm::vec3(1.f, 1.f, 1.f)));
     sendMatrix(objectShader);
     nanosuit.draw(objectShader);
-
+    checkError();
 
     setModel(glm::mat4());
     setModel( glm::translate(model(), glm::vec3(-3.0f, 0.0f, 0.0f)));
@@ -137,7 +137,7 @@ void MyScene::render()
     // --- lighting SOURCE --- //
 
     lightShader.use();
-    GLfloat radius = 2.f;
+    GLfloat radius = 1.f;
 
     plight0.position().x = sin(glfwGetTime()) * radius;
     plight0.position().y = sin(glfwGetTime()) * radius;

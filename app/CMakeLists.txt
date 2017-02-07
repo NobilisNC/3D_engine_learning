@@ -19,4 +19,4 @@ file(
 
 include_directories(include/ ../gl/include/ ../core/include)
 add_executable(${PROJECT_NAME} ${includeFiles} ${sourceFiles})
-target_link_libraries(${PROJECT_NAME} soap-gl soap-core -lglfw -lGL -lSOIL)
+target_link_libraries(${PROJECT_NAME} soap-gl soap-core -lglfw -lGL)
