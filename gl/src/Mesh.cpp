@@ -27,7 +27,6 @@ void Mesh::construct()
 
 void Mesh::destroy()
 {
-    std::cerr << "destroy" << std::endl;
     gl::DeleteBuffers(1, &_VBO);
     gl::DeleteVertexArrays(1, &_VAO);
 }

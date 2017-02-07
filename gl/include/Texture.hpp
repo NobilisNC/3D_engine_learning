@@ -4,7 +4,7 @@
 #include "gl_core_3_3.hpp"
 #include <string>
 #include <iostream>
-
+#include <algorithm>
 
 
 namespace soap {

@@ -1,7 +1,7 @@
 #include "MyScene.hpp"
 
 
-const std::string DATA_PATH = "/home/nobilis/coding/perso/c++/openGL/";
+const std::string DATA_PATH = "/home/nobilis/coding/perso/c++/soap/";
 
 MyScene::MyScene(int h, int w) :
     soap::Scene(h,w) ,
@@ -12,13 +12,14 @@ MyScene::MyScene(int h, int w) :
     grass(DATA_PATH+"data/textures/grass.png", soap::Texture::DIFFUSE),
     default_spec(DATA_PATH+"data/textures/default_spec.png", soap::Texture::SPECULAR),
     cubeMaterial({50, 50, 50}, &textCube, &textCube_spec, 16),
-    lightMaterial({100,100,100}, soap::Color::white, soap::Color::white, 1),
+    lightMaterial({100,100,100}, soap::Color::white, soap::Color::white, 32),
     floorMaterial({40,40,40}, &grass, &default_spec, 2),
     cam(glm::vec3(0.0f, 0.0f, 5.0f)),
-    light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::white, soap::Color::white, 16)),
+    light0(glm::vec3(1,0,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::white, soap::Color::white, 16)),
     plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032),
-    splight0(glm::vec3(-1,1,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 15.f),
-    nanosuit(DATA_PATH + "data/Obj/Triss/Triss.obj")
+    splight0(glm::vec3(0,3,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 17.f),
+    nanosuit(DATA_PATH + "data/Obj/Psyduck/Psyduck.obj"),
+    hitler(DATA_PATH + "data/Obj/hitler/hitler.obj")
 {
 
   this->init();
@@ -101,12 +102,26 @@ void MyScene::render()
 
     objectShader.uniform("viewPos", cam.position());
 
+    static float i = 0;
+
     setModel(glm::mat4());
-    setModel( glm::translate(model(), glm::vec3(.0f, -2.0f, 0.0f)));
-    setModel(glm::scale(model(), glm::vec3(1.f, 1.f, 1.f)));
+    setModel( glm::translate(model(), glm::vec3(.0f, -0.f, 0.0f)));
+    setModel(glm::scale(model(), glm::vec3(0.2f, 0.2f, 0.2f)));
+    setModel(glm::rotate(model(), glm::radians(180.f), glm::vec3(0,0,1) ));
+    setModel(glm::rotate(model(), i, glm::vec3(0,1,0) ));
+
     sendMatrix(objectShader);
     nanosuit.draw(objectShader);
-    checkError();
+    i+=0.1f;
+
+    float taille = 0.04f * abs(sin(i));
+    setModel(glm::mat4());
+    //setModel( glm::translate(model(), glm::vec3(.0f, -0.f, 1.0f)));
+    setModel(glm::scale(model(), glm::vec3(0.02f, taille, 0.02f)));
+    sendMatrix(objectShader);
+    hitler.draw(objectShader);
+
+
 
     setModel(glm::mat4());
     setModel( glm::translate(model(), glm::vec3(-3.0f, 0.0f, 0.0f)));
@@ -149,6 +164,7 @@ void MyScene::render()
 
     sendMatrix(lightShader);
     cubeLight.draw(lightShader);
+    //sausage.draw(lightShader);
 }
 
 

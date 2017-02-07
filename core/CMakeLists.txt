@@ -4,7 +4,6 @@ project(soap-core)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-#set(EXECUTABLE_OUTPUT bin/${CMAKE_BUILD_TYPE})
 
 file(
 	GLOB_RECURSE

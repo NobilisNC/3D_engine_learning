@@ -2,6 +2,7 @@
 #define MYSCENE_HPP
 
 #include <chrono>
+#include <cmath>
 
 #include "Scene.hpp"
 #include "Shader.hpp"
@@ -37,6 +38,8 @@ private :
     soap::SpotLight splight0;
 
     soap::Model nanosuit;
+    soap::Model hitler;
+
 
 
 public:

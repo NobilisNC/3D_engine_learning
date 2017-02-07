@@ -6,6 +6,8 @@ using namespace soap;
 
 Texture::Texture(std::string path, Type type) : _type(type){
 
+    std::replace(path.begin(), path.end(), '\\', '/');
+
     int width, height, comp;
 
     unsigned char* image = stbi_load(path.c_str(), &width, &height, &comp, 4);
