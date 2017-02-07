@@ -18,7 +18,6 @@ void TexturedMaterial::bind(Shader &shader)
     constexpr int ID_TEXTURE_DIFFUSE = 1;
     constexpr int ID_TEXTURE_SPECULAR = 2;
 
-
     _diffuse->bind(ID_TEXTURE_DIFFUSE);
     _specular->bind(ID_TEXTURE_SPECULAR);
 

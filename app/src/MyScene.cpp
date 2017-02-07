@@ -11,16 +11,17 @@ MyScene::MyScene(int h, int w) :
     textCube_spec(DATA_PATH +"data/textures/container2_specular.png", soap::Texture::SPECULAR),
     grass(DATA_PATH+"data/textures/grass.png", soap::Texture::DIFFUSE),
     default_spec(DATA_PATH+"data/textures/default_spec.png", soap::Texture::SPECULAR),
-    cubeMaterial({100, 100, 100}, &textCube, &textCube_spec, 16),
-    lightMaterial({100,200,100}, soap::Color::red, {4,0,0}, 32),
-    floorMaterial({100,100,100}, &grass, &default_spec, 2),
+    cubeMaterial({50, 50, 50}, &textCube, &textCube_spec, 16),
+    lightMaterial({100,100,100}, soap::Color::white, soap::Color::white, 1),
+    floorMaterial({40,40,40}, &grass, &default_spec, 2),
     cam(glm::vec3(0.0f, 0.0f, 5.0f)),
-    light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::gray, soap::Color::white, 16)),
+    light0(glm::vec3(0,1,0), new soap::SimpleMaterial(soap::Color::white, soap::Color::white, soap::Color::white, 16)),
     plight0(glm::vec3(1,-0.5,0), &lightMaterial, 1, 0.9f, 0.032),
-    splight0(glm::vec3(-1,1,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 15.f)
+    splight0(glm::vec3(-1,1,0), &lightMaterial, 1, 0.9f, 0.032, {0,-1,0}, 15.f, 15.f),
+    nanosuit(DATA_PATH + "data/Obj/nanosuit/nanosuit.obj")
 {
 
-    this->init();
+  this->init();
 }
 
 void MyScene::init()
@@ -83,9 +84,9 @@ void MyScene::init()
 
     addLight(&light0);
     addLight(&plight0);
-    addLight(&splight0);
+    //addLight(&splight0);
 
-    gl::ClearColor(soap::Color::gray.r,soap::Color::gray.g,soap::Color::gray.b, 1.0f);
+    //gl::ClearColor(soap::Color::gray.r,soap::Color::gray.g,soap::Color::gray.b, 1.0f);
 }
 
 
@@ -100,10 +101,15 @@ void MyScene::render()
 
     objectShader.uniform("viewPos", cam.position());
 
+    setModel(glm::mat4());
+    setModel( glm::translate(model(), glm::vec3(.0f, -2.0f, 0.0f)));
+    setModel(glm::scale(model(), glm::vec3(.3f, 0.3f, 0.3f)));
+    sendMatrix(objectShader);
+    nanosuit.draw(objectShader);
 
 
     setModel(glm::mat4());
-    setModel( glm::translate(model(), glm::vec3(0.0f, 0.0f, 0.0f)));
+    setModel( glm::translate(model(), glm::vec3(-3.0f, 0.0f, 0.0f)));
     sendMatrix(objectShader);
     cube.draw(objectShader);
 
@@ -114,6 +120,15 @@ void MyScene::render()
     sendMatrix(objectShader);
     floor.draw(objectShader);
 
+    setModel(glm::mat4());
+    setModel( glm::translate(model(), glm::vec3(0.0f, 0.f, -5.0f)));
+    setModel(glm::scale(model(), glm::vec3(10.f, 10.f, 1.f)));
+    sendMatrix(objectShader);
+    floor.draw(objectShader);
+
+
+
+
 
 
 
@@ -122,14 +137,14 @@ void MyScene::render()
     // --- lighting SOURCE --- //
 
     lightShader.use();
-    GLfloat radius = 1.f;
+    GLfloat radius = 2.f;
 
-    //light0.position().x = sin(glfwGetTime()) * radius;
-    //light0.position().y = sin(glfwGetTime()) * radius;
-    //light0.position().z = cos(glfwGetTime()) * radius;
+    plight0.position().x = sin(glfwGetTime()) * radius;
+    plight0.position().y = sin(glfwGetTime()) * radius;
+    plight0.position().z = cos(glfwGetTime()) * radius;
     setModel(glm::mat4());
 
-    setModel( glm::translate(model(), splight0.position()));
+    setModel( glm::translate(model(), plight0.position()));
     setModel(glm::scale(model(), glm::vec3(0.2f)));
 
     sendMatrix(lightShader);

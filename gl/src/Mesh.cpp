@@ -5,7 +5,6 @@ using namespace soap;
 void Mesh::construct()
 {
 
-    destroy();
     gl::GenVertexArrays(1, &_VAO);
     gl::BindVertexArray(_VAO);
         gl::GenBuffers(1, &_VBO);
@@ -23,10 +22,12 @@ void Mesh::construct()
         gl::EnableVertexAttribArray(2);
 
         gl::BindVertexArray(0);
+
 }
 
 void Mesh::destroy()
 {
+    std::cerr << "destroy" << std::endl;
     gl::DeleteBuffers(1, &_VBO);
     gl::DeleteVertexArrays(1, &_VAO);
 }

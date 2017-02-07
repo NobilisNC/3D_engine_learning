@@ -36,6 +36,8 @@ private :
     soap::PointLight plight0;
     soap::SpotLight splight0;
 
+    soap::Model nanosuit;
+
 
 public:
     MyScene(int h, int w);

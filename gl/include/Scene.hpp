@@ -11,6 +11,7 @@
 #include "DirectionalLight.hpp"
 #include "SpotLight.hpp"
 #include "PointLight.hpp"
+#include "Model.hpp"
 
 namespace soap {
 
@@ -19,7 +20,7 @@ class Scene
 private :
     int _width;
     int _height;
-    std::vector<Mesh*> _meshes;
+    std::vector<Model> _models;
     std::vector<Light*> _lights;
 
     glm::mat4 _projection;
@@ -54,8 +55,8 @@ public :
     inline int width() const { return _width;}
     inline int height() const {return _height;}
 
-    inline void addMesh(Mesh* mesh) { _meshes.push_back(mesh);}
-     inline void addLight(Light* light) { _lights.push_back(light);}
+    inline void addMesh(Model& model) { _models.push_back(model);}
+    inline void addLight(Light* light) { _lights.push_back(light);}
 
 };
 

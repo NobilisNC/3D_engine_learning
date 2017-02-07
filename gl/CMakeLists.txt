@@ -21,7 +21,7 @@ file(
 
 include_directories(include/ ../core/include/)
 add_library(soap-gl ${includeFiles} ${sourceFiles})
-target_link_libraries(soap-gl soap-core -lSOIL -lGL -lglfw)
+target_link_libraries(soap-gl soap-core -lSOIL -lGL -lglfw -lassimp)
 
 
 

@@ -28,11 +28,7 @@ public:
     inline void setMaterial(Material* material) noexcept {_material = material;}
     inline void setVertices(const VertexArray& vertices) {_vertices = vertices; construct();}
 
-
-
     void draw(Shader& shader);
-
-
 };
 
 }

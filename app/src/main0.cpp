@@ -16,6 +16,7 @@
 #include "Material.hpp"
 #include "Mesh.hpp"
 #include "MyScene.hpp"
+#include "MyScene2.hpp"
 
 const std::string DATA_PATH = "/home/nobilis/coding/perso/c++/openGL/";
 
@@ -47,102 +48,15 @@ int main()
     glfwSetCursorPosCallback(window, soap::EventsHandler::mouse_callback);
 
 
-
-
-    /*if(!gl::sys::LoadFunctions())
-        throw 'a';
-
-    gl::Enable(gl::DEPTH_TEST);*/
-
-
     int width, height;
 
     glfwGetFramebufferSize(window, &width, &height);
-    //gl::Viewport(0, 0, width, height);
+
     MyScene scene(width, height);
-
-
-   /* soap::Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/light.shader");
-    //Shader lightingShader(DATA_PATH + "data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/bug.shader");
-    soap::Shader lightSourceShader(DATA_PATH +"data/shaders/vertex/2.shader", DATA_PATH +"data/shaders/fragment/source_light.shader");
-
-    soap::Texture cubeTexture(DATA_PATH +"data/textures/container2.png");
-    soap::Texture cubeTexture_spec(DATA_PATH +"data/textures/container2_specular.png", soap::Texture::SPECULAR);
-
-    soap::Material lightMaterial({100, 100, 100}, {200,200,200}, soap::Color::white);
-    soap::Material cubeMaterial({100,100,100}, soap::Color::blue, soap::Color::cyan);
-    soap::Material cubeMaterial2({200,100,100}, soap::Color::blue, soap::Color::blue);
-    cubeMaterial2.setTextured(&cubeTexture, &cubeTexture_spec);
-
-
-    glm::mat4 projection;
-    projection = glm::perspective(45.0f, GLfloat(WIDTH) / HEIGHT, 0.1f, 100.0f);
-
-
-    soap::VertexArray verticesCube ={
-        // Positions           // Normals           // Texture Coords
-        {{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f},  {0.0f, 0.0f}},
-        {{0.5f, -0.5f, -0.5f},  {0.0f,  0.0f, -1.0f},  {1.0f, 0.0f}},
-        {{0.5f,  0.5f, -0.5f},  {0.0f,  0.0f, -1.0f},  {1.0f, 1.0f}},
-        {{0.5f,  0.5f, -0.5f},  {0.0f,  0.0f, -1.0f},  {1.0f, 1.0f}},
-        {{-0.5f,  0.5f, -0.5f}, {0.0f,  0.0f, -1.0f},  {0.0f, 1.0f}},
-        {{-0.5f, -0.5f, -0.5f}, {0.0f,  0.0f, -1.0f},  {0.0f, 0.0f}},
-
-        {{-0.5f, -0.5f,  0.5f},  {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
-        {{0.5f, -0.5f,  0.5f},   {0.0f,  0.0f, 1.0f},  {1.0f, 0.0f}},
-        {{0.5f,  0.5f,  0.5f},   {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
-        {{0.5f,  0.5f,  0.5f},   {0.0f,  0.0f, 1.0f},  {1.0f, 1.0f}},
-        {{-0.5f,  0.5f,  0.5f},  {0.0f,  0.0f, 1.0f},  {0.0f, 1.0f}},
-        {{-0.5f, -0.5f,  0.5f},  {0.0f,  0.0f, 1.0f},  {0.0f, 0.0f}},
-
-        {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-        {{-0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 1.0f}},
-        {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-        {{-0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 1.0f}},
-        {{-0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {0.0f, 0.0f}},
-        {{-0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, {1.0f, 0.0f}},
-
-        {{0.5f,  0.5f,  0.5f},  {1.0f,  0.0f,  0.0f},  {1.0f, 0.0f}},
-        {{0.5f,  0.5f, -0.5f},  {1.0f,  0.0f,  0.0f},  {1.0f, 1.0f}},
-        {{0.5f, -0.5f, -0.5f},  {1.0f,  0.0f,  0.0f},  {0.0f, 1.0f}},
-        {{0.5f, -0.5f, -0.5f},  {1.0f,  0.0f,  0.0f},  {0.0f, 1.0f}},
-        {{0.5f, -0.5f,  0.5f},  {1.0f,  0.0f,  0.0f},  {0.0f, 0.0f}},
-        {{0.5f,  0.5f,  0.5f},  {1.0f,  0.0f,  0.0f},  {1.0f, 0.0f}},
-
-        {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f},  {0.0f, 1.0f}},
-        {{0.5f, -0.5f, -0.5f},  {0.0f, -1.0f,  0.0f},  {1.0f, 1.0f}},
-        {{0.5f, -0.5f,  0.5f},  {0.0f, -1.0f,  0.0f},  {1.0f, 0.0f}},
-        {{0.5f, -0.5f,  0.5f},  {0.0f, -1.0f,  0.0f},  {1.0f, 0.0f}},
-        {{-0.5f, -0.5f,  0.5f}, {0.0f, -1.0f,  0.0f},  {0.0f, 0.0f}},
-        {{-0.5f, -0.5f, -0.5f}, {0.0f, -1.0f,  0.0f},  {0.0f, 1.0f}},
-
-        {{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f},  {0.0f, 1.0f}},
-        {{0.5f,  0.5f, -0.5f},  {0.0f,  1.0f,  0.0f},  {1.0f, 1.0f}},
-        {{0.5f,  0.5f,  0.5f},  {0.0f,  1.0f,  0.0f},  {1.0f, 0.0f}},
-        {{0.5f,  0.5f,  0.5f},  {0.0f,  1.0f,  0.0f},  {1.0f, 0.0f}},
-        {{-0.5f,  0.5f,  0.5f}, {0.0f,  1.0f,  0.0f},  {0.0f, 0.0f}},
-        {{-0.5f,  0.5f, -0.5f}, {0.0f,  1.0f,  0.0f},  {0.0f, 1.0f}}
-    };
-
-
-    soap::Mesh cubeMesh(verticesCube);
-    //cubeMesh.setMaterial(&cubeMaterial);
-    cubeMesh.setMaterial(&cubeMaterial2);
-
-
-    soap::Mesh lightMesh(verticesCube);
-    lightMesh.setMaterial(&lightMaterial);
+    //MyScene2 scene(width, height);
 
 
 
-
-
-
-    glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-
-
-
-    checkError();*/
 
 
     GLfloat lastFrame = 0.0f;
@@ -153,48 +67,7 @@ int main()
         lastFrame = currentFrame;
         glfwPollEvents();
 
-        /*lightingShader.use();
 
-        gl::ClearColor(0.f, 0.f, 0.f, 1.0f);
-
-        gl::Clear(gl::COLOR_BUFFER_BIT | gl::DEPTH_BUFFER_BIT);
-
-        glm::mat4 view = cam1.getView();
-
-
-
-        glm::mat4 model;
-        model = glm::translate(model, glm::vec3(0.0f));
-
-        lightingShader.uniform("view", view);
-        lightingShader.uniform("model", model);
-        lightingShader.uniform("projection", projection);
-
-
-        lightingShader.uniform("light", lightMaterial);
-        lightingShader.uniform("light.pos", lightPos);
-        lightingShader.uniform("viewPos", cam1.position());
-
-        cubeMesh.draw(lightingShader);
-
-
-        // --- lighting SOURCE --- //
-        lightSourceShader.use();
-
-        GLfloat radius = 1.f;
-        lightPos.x = sin(glfwGetTime()) * radius;
-        lightPos.y = sin(glfwGetTime()) * radius;
-        lightPos.z = cos(glfwGetTime()) * radius;
-
-        model = glm::translate(model, lightPos);
-        model = glm::scale(model, glm::vec3(0.2f));
-
-        lightSourceShader.uniform("view", view);
-        lightSourceShader.uniform("model", model);
-        lightSourceShader.uniform("projection", projection);
-        lightSourceShader.uniform("lightColor", lightMaterial.diffuse.toVec3());
-
-        lightMesh.draw(lightSourceShader);*/
 
         scene.draw();
 
