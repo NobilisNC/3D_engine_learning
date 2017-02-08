@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include "EntityManager.hpp"
 
 
 namespace soap {
@@ -27,7 +28,13 @@ public :
         void unbind();
 
         inline Type getType() const {return _type;}
+
+
 };
+        using TextureKey = EntityManager<std::string, Texture>::Key;
+
+
+
 
 
 }

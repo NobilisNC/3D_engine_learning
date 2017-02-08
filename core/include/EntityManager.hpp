@@ -5,48 +5,94 @@
 #include <functional>
 #include <string>
 
+#include "Meta.hpp"
+
 namespace soap {
 
 template<typename T, typename K>
-class Manager {
+class EntityManager {
 public:
+    /**
+      * @brief The Key struct : it used to Handle an entity.
+      *
+      */
      struct Key {
         size_t hash;
+        EntityManager* manager;
+
+        K* operator->() {
+            return manager->_map[hash];
+        }
     };
+
+
+     /** *** *** *** **/
+
+     /**
+      * @brief The ChainedArg struct : it used to chained Manager(KEY).insert(args...);
+      *
+      */
+     class ChainedArg {
+     private :
+         Key _k;
+         EntityManager* _manager;
+    public :
+         ChainedArg(Key key, EntityManager* manager) : _k(key), _manager(manager) {}
+
+         template<typename... Args>
+         Key insert(Args... args) {
+             return _manager->insert(_k, args...);
+         }
+
+         template<typename... Args>
+         Key operator()(Args... args) {
+             return _manager->insert(_k, args...);
+         }
+     };
+
+     /** *** *** *** **/
 
 private :
     std::hash<T>        _hash_func;
     std::map<size_t, K*> _map;
 
     Key hash(T& t) {
-        return Key{_hash_func(t)};
+        return Key{_hash_func(t), this};
     }
 
     bool isLoaded(Key key) {
         return (_map.find(key.hash) != _map.end() ? true : false);
     }
 
-public :
-    Manager() {
-
-    }
-
-    ~Manager() {
-
-    }
 
     template<typename... Args>
-    Key insert(T t, Args&&... args) {
-        Key key = hash(t);
+    Key insert(Key key, Args&&... args) {
 
         if(!isLoaded(key)){
-            K* k= new K(t, args...);
+            K* k= new K(args...);
             _map[key.hash] = k;
         }
 
         return key;
+    }
+
+public :
+    EntityManager() {
 
     }
+
+    ~EntityManager() {
+
+    }
+
+    ChainedArg operator()(T t) {
+        Key key = hash(t);
+
+        return ChainedArg(key, this);
+    }
+
+
+
 
     K& get(Key key) {
         return *_map[key.hash];
@@ -56,6 +102,8 @@ public :
         return *_map[key.hash];
     }
 
+    friend class Key;
+    friend class ChainedArg;
 };
 }
 #endif

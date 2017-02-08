@@ -10,6 +10,7 @@
 
 #include "Mesh.hpp"
 #include "TexturedMaterial.hpp"
+#include "Global.hpp"
 
 
 namespace soap {

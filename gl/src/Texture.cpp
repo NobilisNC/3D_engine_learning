@@ -4,6 +4,7 @@
 
 using namespace soap;
 
+
 Texture::Texture(std::string path, Type type) : _type(type){
 
     std::replace(path.begin(), path.end(), '\\', '/');

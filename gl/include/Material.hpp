@@ -4,6 +4,7 @@
 #include "glm/glm.hpp"
 #include "Color.hpp"
 #include "Shader.hpp"
+#include "EntityManager.hpp"
 
 
 namespace soap {
@@ -33,6 +34,7 @@ public :
 
     inline const float& shininess() const {return _shininess;}
     inline       float& shininess()       {return _shininess;}
+
 
 };
 

@@ -11,6 +11,8 @@
 #include "SimpleMaterial.hpp"
 #include "TexturedMaterial.hpp"
 #include "DirectionalLight.hpp"
+#include "Texture.hpp"
+#include "Global.hpp"
 
 class MyScene : public soap::Scene
 {
@@ -22,10 +24,10 @@ private :
     soap::Mesh cubeLight;
     soap::Mesh floor;
 
-    soap::Texture textCube;
-    soap::Texture textCube_spec;
-    soap::Texture grass;
-    soap::Texture default_spec;
+    soap::TextureKey textCube;
+    soap::TextureKey textCube_spec;
+    soap::TextureKey grass;
+    soap::TextureKey default_spec;
 
     soap::TexturedMaterial cubeMaterial;
     soap::SimpleMaterial lightMaterial;

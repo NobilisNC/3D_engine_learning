@@ -54,8 +54,6 @@ int main()
     glfwGetFramebufferSize(window, &width, &height);
 
     MyScene scene(width, height);
-    //MyScene2 scene(width, height);
-
 
 
 

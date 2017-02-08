@@ -2,7 +2,7 @@
 
 using namespace soap;
 
-TexturedMaterial::TexturedMaterial(soap::RGBColor ambient, soap::Texture *diffuse, soap::Texture *specular, float shininess)
+TexturedMaterial::TexturedMaterial(soap::RGBColor ambient, TextureKey diffuse, TextureKey specular, float shininess)
     : Material(ambient, shininess), _diffuse(diffuse), _specular(specular)
 {
 
@@ -18,8 +18,9 @@ void TexturedMaterial::bind(Shader &shader)
     constexpr int ID_TEXTURE_DIFFUSE = 1;
     constexpr int ID_TEXTURE_SPECULAR = 2;
 
+    //Manager::texture[_diffuse].bind(ID_TEXTURE_DIFFUSE);
     _diffuse->bind(ID_TEXTURE_DIFFUSE);
-    _specular->bind(ID_TEXTURE_SPECULAR);
+    Manager::texture[_specular].bind(ID_TEXTURE_SPECULAR);
 
     shader.uniform("isTextured", true);
     shader.uniform("texMaterial.ambient", _ambient.toVec3());
