@@ -20,19 +20,6 @@ private :
     soap::Shader lightShader;
     soap::Shader objectShader;
 
-    soap::Mesh cube;
-    soap::Mesh cubeLight;
-    soap::Mesh floor;
-
-    soap::TextureKey textCube;
-    soap::TextureKey textCube_spec;
-    soap::TextureKey grass;
-    soap::TextureKey default_spec;
-
-    soap::TexturedMaterial cubeMaterial;
-    soap::SimpleMaterial lightMaterial;
-    soap::TexturedMaterial floorMaterial;
-
     soap::Camera cam;
 
     soap::DirectionalLight light0;

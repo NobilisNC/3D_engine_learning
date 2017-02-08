@@ -5,12 +5,15 @@
 #include "Color.hpp"
 #include "Shader.hpp"
 #include "EntityManager.hpp"
+#include "Interface.hpp"
 
 
 namespace soap {
 
 
-class Material
+constexpr float DEFAULT_SHININESS = 32.0f;
+
+class Material : public virtual Cloneable<Material>
 {
 public :
     enum type {
@@ -23,20 +26,21 @@ protected :
 
 
 public :
-    Material(RGBColor ambient, float shininess);
+    Material(RGBColor ambient, float shininess = DEFAULT_SHININESS);
     virtual ~Material() = 0;
 
     virtual void bind(Shader& shader) = 0;
+    virtual Material* clone() = 0;
 
 
-    inline const RGBColor& ambient() const {return _ambient;}
-    inline       RGBColor& ambient()       {return _ambient;}
+    inline const RGBColor& ambient() const noexcept {return _ambient;}
+    inline       RGBColor& ambient()       noexcept {return _ambient;}
 
-    inline const float& shininess() const {return _shininess;}
-    inline       float& shininess()       {return _shininess;}
-
+    inline const float& shininess() const  noexcept {return _shininess;}
+    inline       float& shininess()        noexcept {return _shininess;}
 
 };
+    using MaterialKey = EntityManager<std::string, Material>::Key;
 
 }
 

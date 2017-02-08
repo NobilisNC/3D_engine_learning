@@ -15,16 +15,17 @@ protected :
 
 public :
         const type TYPE = TEXTURED;
-        TexturedMaterial(RGBColor ambient, TextureKey diffuse, TextureKey specular, float shininess);
+        TexturedMaterial(RGBColor ambient, TextureKey diffuse, TextureKey specular, float shininess = DEFAULT_SHININESS);
         virtual ~TexturedMaterial();
 
         virtual void bind(Shader &shader);
+        virtual Material* clone();
 
-        inline const TextureKey&  diffuse() const {return _diffuse;}
-        inline       TextureKey& diffuse()        {return _diffuse;}
+        inline const TextureKey& diffuse() const noexcept {return _diffuse;}
+        inline       TextureKey& diffuse()       noexcept {return _diffuse;}
 
-        inline const TextureKey& specular()  const {return _specular;}
-        inline       TextureKey& specular()        {return _specular;}
+        inline const TextureKey& specular()  const noexcept {return _specular;}
+        inline       TextureKey& specular()        noexcept {return _specular;}
 };
 
 

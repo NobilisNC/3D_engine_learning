@@ -6,13 +6,14 @@
 #include <iostream>
 #include <algorithm>
 #include "EntityManager.hpp"
+#include "Interface.hpp"
 
 
 namespace soap {
 
 
 
-class Texture {
+class Texture : public virtual Cloneable<Texture> {
 public :
     enum Type {
         SPECULAR, DIFFUSE
@@ -28,6 +29,8 @@ public :
         void unbind();
 
         inline Type getType() const {return _type;}
+
+        virtual Texture* clone();
 
 
 };

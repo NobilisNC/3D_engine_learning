@@ -14,10 +14,11 @@ protected :
 public :
     const type TYPE = SIMPLE;
 
-    SimpleMaterial(RGBColor ambient, RGBColor diffuse, RGBColor specular, float shininess);
+    SimpleMaterial(RGBColor ambient = Color::white, RGBColor diffuse = Color::white, RGBColor specular= Color::white, float shininess = DEFAULT_SHININESS);
     virtual ~SimpleMaterial();
 
     virtual void bind(Shader &shader);
+    virtual Material* clone();
 
     void lightBind(Shader& shader);
 

@@ -32,13 +32,11 @@ class EventsHandler {
         static GLfloat deltaTimeFrame;
 
         static void init();
-        static void addKeyboardListener(KeyboardListener* obj);
-        static void addMouseListener(MouseListener* obj);
+        static void addKeyboardListener (KeyboardListener* obj);
+        static void addMouseListener    (MouseListener* obj);
 
-        static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-        static void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-
-
+        static void key_callback   (GLFWwindow* window, int key, int scancode, int action, int mode);
+        static void mouse_callback (GLFWwindow* window, double xpos, double ypos);
 
 };
 

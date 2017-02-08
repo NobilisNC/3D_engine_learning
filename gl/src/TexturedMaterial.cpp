@@ -18,7 +18,6 @@ void TexturedMaterial::bind(Shader &shader)
     constexpr int ID_TEXTURE_DIFFUSE = 1;
     constexpr int ID_TEXTURE_SPECULAR = 2;
 
-    //Manager::texture[_diffuse].bind(ID_TEXTURE_DIFFUSE);
     _diffuse->bind(ID_TEXTURE_DIFFUSE);
     Manager::texture[_specular].bind(ID_TEXTURE_SPECULAR);
 
@@ -28,4 +27,9 @@ void TexturedMaterial::bind(Shader &shader)
     shader.uniform("texMaterial.specular", ID_TEXTURE_SPECULAR);
     shader.uniform("texMaterial.shininess", _shininess);
 
+}
+
+Material *TexturedMaterial::clone()
+{
+ return new TexturedMaterial(*this);
 }

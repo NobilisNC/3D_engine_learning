@@ -15,7 +15,7 @@ protected :
     float _quadratic;
 
 public:
-    PointLight(glm::vec3 position, SimpleMaterial *material, float constant, float linear, float quadratic);
+    PointLight(glm::vec3 position, SimpleMaterial &&material, float constant, float linear, float quadratic);
     ~PointLight();
 
     virtual void bind(Shader &shader);

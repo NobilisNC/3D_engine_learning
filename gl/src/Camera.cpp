@@ -15,7 +15,7 @@ glm::mat4 Camera::getView() {
 
 void Camera::keyPressed(bool* keys) {
 
-    GLfloat speed = 5.0f * EventsHandler::deltaTimeFrame;
+    float speed = 5.0f * EventsHandler::deltaTimeFrame;
 
     if(keys[GLFW_KEY_W])
         forward(speed);
@@ -28,14 +28,14 @@ void Camera::keyPressed(bool* keys) {
 }
 
 void Camera::mouseMoved(double xpos, double ypos) {
-    static GLfloat lastX = 0.0f, lastY = 0.0f;
+    static float lastX = 0.0f, lastY = 0.0f;
 
-    GLfloat xoffset = xpos - lastX;
-    GLfloat yoffset = lastY - ypos;
+    float xoffset = xpos - lastX;
+    float yoffset = lastY - ypos;
     lastX = xpos;
     lastY = ypos;
 
-    GLfloat sensitivity = 0.05;
+    float sensitivity = 0.05;
     xoffset *= sensitivity;
     yoffset *= sensitivity;
 

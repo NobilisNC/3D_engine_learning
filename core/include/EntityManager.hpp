@@ -6,6 +6,7 @@
 #include <string>
 
 #include "Meta.hpp"
+#include "Interface.hpp"
 
 namespace soap {
 
@@ -39,7 +40,7 @@ public:
     public :
          ChainedArg(Key key, EntityManager* manager) : _k(key), _manager(manager) {}
 
-         template<typename... Args>
+         /*template<typename... Args>
          Key insert(Args... args) {
              return _manager->insert(_k, args...);
          }
@@ -47,6 +48,14 @@ public:
          template<typename... Args>
          Key operator()(Args... args) {
              return _manager->insert(_k, args...);
+         }*/
+
+         Key operator()(Cloneable<K>&& c) {
+             return _manager->insert(_k, c);
+         }
+
+         Key insert(Cloneable<K>&& c) {
+             return _manager->insert(_k, c);
          }
      };
 
@@ -65,11 +74,22 @@ private :
     }
 
 
-    template<typename... Args>
+   /* template<typename... Args>
     Key insert(Key key, Args&&... args) {
+
 
         if(!isLoaded(key)){
             K* k= new K(args...);
+            _map[key.hash] = k;
+        }
+
+        return key;
+    }*/
+
+    Key insert(Key key, Cloneable<K>& c) {
+
+        if(!isLoaded(key)){
+             K* k = c.clone();
             _map[key.hash] = k;
         }
 

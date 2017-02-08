@@ -60,13 +60,15 @@ void Model::processMaterial(Mesh &mesh, aiMaterial &material) {
 
     aiString path;
     material.GetTexture(aiTextureType_DIFFUSE, 0, &path);
-    TextureKey text_diff = Manager::texture(_path + path.C_Str()).insert(_path + path.C_Str(), Texture::DIFFUSE);
+    TextureKey text_diff = Manager::texture(_path + path.C_Str()).insert(Texture(_path + path.C_Str(), Texture::DIFFUSE));
 
     material.GetTexture(aiTextureType_SPECULAR, 0, &path);
-    TextureKey text_spec = Manager::texture(_path + path.C_Str()).insert(_path + path.C_Str(), Texture::SPECULAR);
+    TextureKey text_spec = Manager::texture(_path + path.C_Str()).insert(Texture(_path + path.C_Str(), Texture::SPECULAR));
 
-    TexturedMaterial* mat = new TexturedMaterial({100,100,100}, text_diff, text_spec, 16.f);
-    mesh.setMaterial(mat);
+    mesh.setMaterial(
+                Manager::material(std::to_string(text_diff.hash) + std::to_string(text_spec.hash))
+                     (TexturedMaterial({100,100,100}, text_diff, text_spec, 16.f))
+                );
 
 }
 

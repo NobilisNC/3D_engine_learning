@@ -12,7 +12,7 @@ protected :
     static unsigned NB_LIGHT;
 
 public:
-    DirectionalLight(glm::vec3 position, SimpleMaterial *material);
+    DirectionalLight(glm::vec3 position, SimpleMaterial &&material);
     ~DirectionalLight();
 
     virtual void bind(Shader &shader);

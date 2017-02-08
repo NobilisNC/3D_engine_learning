@@ -15,7 +15,6 @@
 #include "Material.hpp"
 #include "Mesh.hpp"
 #include "MyScene.hpp"
-#include "MyScene2.hpp"
 
 
 
@@ -41,7 +40,7 @@ int main()
 
     GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Test", nullptr, nullptr);
     glfwMakeContextCurrent(window);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 
     soap::EventsHandler::init();

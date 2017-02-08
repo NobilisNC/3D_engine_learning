@@ -40,3 +40,8 @@ void Texture::unbind() {
     gl::BindTexture(gl::TEXTURE_2D, 0);
 
 }
+
+Texture *Texture::clone()
+{
+    return new Texture(*this);
+}

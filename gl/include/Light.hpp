@@ -12,12 +12,12 @@ public :
 
 
 protected :
-    SimpleMaterial* _material;
+    SimpleMaterial _material;
     glm::vec3 _position;
 
 
 public :
-    Light(glm::vec3 position, SimpleMaterial *material);
+    Light(glm::vec3 position, SimpleMaterial&& material);
     ~Light();
 
     virtual void bind(Shader &shader) = 0;
@@ -25,8 +25,8 @@ public :
     inline const glm::vec3& position() const {return _position;}
     inline       glm::vec3& position()       {return _position;}
 
-    inline SimpleMaterial*  material() const {return _material;}
-    inline SimpleMaterial*& material()       {return _material;}
+    inline SimpleMaterial  material() const {return _material;}
+    inline SimpleMaterial material()        {return _material;}
 
 
 };

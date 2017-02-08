@@ -22,6 +22,11 @@ void SimpleMaterial::bind(Shader &shader)
     shader.uniform("material.shininess", _shininess);
 }
 
+Material* SimpleMaterial::clone()
+{
+    return new SimpleMaterial(*this);
+}
+
 void SimpleMaterial::lightBind(Shader &shader)
 {
     shader.uniform("light.ambient", _ambient.toVec3() );

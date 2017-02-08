@@ -18,7 +18,7 @@ protected :
 
 
 public:
-    SpotLight(glm::vec3 position, SimpleMaterial *material, float constant, float linear, float quadratic, glm::vec3 direction, float cutOff, float outerCutOff);
+    SpotLight(glm::vec3 position, SimpleMaterial&& material, float constant, float linear, float quadratic, glm::vec3 direction, float cutOff, float outerCutOff);
     ~SpotLight();
 
     virtual void bind(Shader &shader);
